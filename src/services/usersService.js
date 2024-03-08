@@ -21,6 +21,15 @@ const exposeServices = {
     }
   },
 
+  findUserByRefreshToken: async ({ refreshToken }) => {
+    try {
+      const findUser = await User.findOne({ refreshToken })
+      return findUser
+    } catch (error) {
+      throw error
+    }
+  },
+
   findAllUsers: async () => {
     try {
       const allUsers = await User.find()
