@@ -57,6 +57,23 @@ const exposeServices = {
       throw error
     }
   },
+
+  updateUserToken: async ({ userId, refreshToken }) => {
+    const query = {
+      _id: userId
+    }
+    const updateQ = {
+      $set: {
+        refreshToken
+      }
+    }
+    try {
+      const toUpdate = await User.findOneAndUpdate(query, updateQ, { new: true })
+      return toUpdate
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default exposeServices

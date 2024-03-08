@@ -6,7 +6,8 @@ const userSchema = new Schema({
     firstName: String,
     email: { type: String, required: 'email is required', unique:true },
     skills: [{ type: Schema.Types.ObjectId, ref: 'skills' }],
-    password: { type: String, required: 'password is required'},
+    password: { type: String, required: 'password is required' },
+    refreshToken:String,
 },
     { timestamps: true }
 );

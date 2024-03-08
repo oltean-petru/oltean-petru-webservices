@@ -20,6 +20,7 @@ const exposeController = {
       const token = signJwt({ payload: tokenPayload, expiresIn: '1d' })
       const refreshToken = signJwt({ payload: tokenPayload, expiresIn: '7d' })
       const accessToken = { access_token: token, token_type: 'Bearer' }
+      await usersService.updateUserToken({userId:user._id,refreshToken})
       return res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' }).json(accessToken)
     }
     return res.sendStatus(401)
