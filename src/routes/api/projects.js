@@ -5,7 +5,8 @@ import rbac from '../../middleware/rbac.js';
 
 const router = express.Router();
 
-router.get('/', [authGuard.protect, rbac.authorizationChecker], projectsController.allProjects);
+router.get('/', projectsController.allProjects);
+router.get('/home', projectsController.threeRecentProjects);
 router.get('/:id', [authGuard.protect, rbac.authorizationChecker], projectsController.allProjectsByUser);
 router.post('/', [authGuard.protect, rbac.authorizationChecker], projectsController.createProject);
 
