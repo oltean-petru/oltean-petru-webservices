@@ -19,8 +19,9 @@ const exposeController = {
 
   updateUser: async (req, res) => {
     const { body } = req
+    const { id } = req.params
     try {
-      const updatedUser = await usersService.updateUser(body)
+      const updatedUser = await usersService.updateUser({id,body})
       return res.json(updatedUser)
     } catch (error) {
       return res.sendStatus(400)
@@ -29,8 +30,9 @@ const exposeController = {
 
   patchUser: async (req, res) => {
     const { body } = req
+    const { id } = req.params
     try {
-      const updatedUser = await usersService.patchUser(body)
+      const updatedUser = await usersService.patchUser({id,body})
       return res.json(updatedUser)
     } catch (error) {
       return res.sendStatus(400)

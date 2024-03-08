@@ -1,8 +1,23 @@
 import projectService from "../services/projectsService.js"
+import QueryBuilder from "../utils/querryBuilder.js";
+import Project from "../models/Projects.js";
 
 const projectController = {
   allProjects: async (req, res) => {
-    const allProjects = await projectService.findAllProjects();
+    const builder = new QueryBuilder(Project);
+    if (req.query.userId) {
+      builder.filterByField('userId', req.query.userId);
+    }
+    if (req.query.sortBy) {
+      builder.sortByField(req.query.sortBy);
+    }
+    if (req.query.fields) {
+      builder.limitFields(req.query.fields);
+    }
+    if (req.query.page && req.query.limit) {
+      builder.paginate(req.query.page, req.query.limit);
+    }
+    const allProjects = await builder.execute();
     return res.json(allProjects);
   },
 

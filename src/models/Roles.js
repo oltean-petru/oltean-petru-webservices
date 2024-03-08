@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const roleSchema = new Schema({
     name:String,
-    authorizations:[Schema.Types.Mixed]
+    permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }]
 });
 
 const roleModel = mongoose.model('roles',roleSchema)

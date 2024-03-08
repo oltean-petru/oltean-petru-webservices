@@ -30,6 +30,20 @@ const exposeServices = {
     }
   },
 
+  findUserByIdWithRoles: async ({ id }) => {
+    const uid = { _id: id }
+    const filter = { roles: 1 }
+    const embed = {
+      populate: { path: 'roles', select: 'authorizations' }
+    }
+    try {
+      const findUser = await User.findOne(uid, filter, embed)
+      return findUser
+    } catch (error) {
+      throw error
+    }
+  },
+
   findAllUsers: async () => {
     try {
       const allUsers = await User.find()
