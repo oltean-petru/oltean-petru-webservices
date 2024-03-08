@@ -18,15 +18,11 @@ const exposeMiddleware = {
     }
 
     const resourcePath = baseUrl.split('/')[3];
-    console.log("resourcePath:", resourcePath);
     const findResource = permissions.find(({ resource }) => resource == resourcePath);
     const isAllowed = findResource && findResource.permissions.includes(method);
 
-    console.log(`control of ${resourcePath} in ${method}`, findResource);
-    if (isAllowed) {
-      return next();
-    }
-    return res.sendStatus(403);
+    if (!isAllowed) return res.sendStatus(403);
+    return next();
   }
 }
 

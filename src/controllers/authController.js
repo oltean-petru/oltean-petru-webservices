@@ -50,6 +50,17 @@ const exposeController = {
       console.log(error)
       return res.sendStatus(401);
     }
+  },
+
+  logout: async (req, res) => {
+    const { cookies } = req
+    if (!cookies?.refreshToken) return res.sendStatus(401)
+    const refreshToken = cookies.refreshToken
+    const foundUser = await usersService.findUserByRefreshToken({ refreshToken })
+    if (!foundUser) return res.sendStatus(403)
+    await usersService.updateUserToken({userId:foundUser._id,refreshToken:null})
+    res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'None', secure: true })
+    return res.sendStatus(200)
   }
 }
 

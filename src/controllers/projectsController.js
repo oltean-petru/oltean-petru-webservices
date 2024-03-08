@@ -44,7 +44,28 @@ const projectController = {
     } catch (error) {
       return res.sendStatus(400);
     }
-  }
+  },
+
+  updateProject: async (req, res) => {
+    const { id } = req.params;
+    const { body } = req;
+    try {
+      const updatedProject = await projectService.updateProject(id, body);
+      return res.json(updatedProject);
+    } catch (error) {
+      return res.sendStatus(400);
+    }
+  },
+
+  deleteProject: async (req, res) => {
+    const { id } = req.params;
+    try {
+      await projectService.deleteProject(id);
+      return res.sendStatus(204);
+    } catch (error) {
+      return res.sendStatus(400);
+    }
+  },
 };
 
 export default projectController;

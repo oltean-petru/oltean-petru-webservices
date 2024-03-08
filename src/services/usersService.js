@@ -118,6 +118,15 @@ const exposeServices = {
     } catch (error) {
       throw error
     }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      const deletedUser = await User.findByIdAndDelete(id)
+      return deletedUser
+    } catch (error) {
+      throw error
+    }
   }
 }
 

@@ -38,6 +38,24 @@ const exposeServices = {
       throw error;
     }
   },
+
+  updateProject: async (id, rawData) => {
+    try {
+      const updatedProject = await Projects.findByIdAndUpdate(id, rawData, { new: true });
+      return updatedProject;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  deleteProject: async (id) => {
+    try {
+      const deletedProject = await Projects.findByIdAndDelete(id);
+      return deletedProject;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default exposeServices;

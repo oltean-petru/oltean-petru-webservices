@@ -5,9 +5,7 @@ const exposeMiddleware = {
   protect: async (req, res, next) => {
     const accessToken = req.headers['authorization'];
 
-    if (!accessToken) {
-      return res.status(401).send('Unauthorized');
-    }
+    if (!accessToken) return res.status(401).send('Unauthorized');
     if (accessToken.startsWith('Bearer ')) {
       const cleanAccess = accessToken.slice(7, accessToken.length);
       try {

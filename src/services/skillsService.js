@@ -40,6 +40,24 @@ const exposeServices = {
       throw error;
     }
   },
+
+  updateSkill: async (id, rawData) => {
+    try {
+      const updatedSkill = await Skills.findByIdAndUpdate(id, rawData, { new: true });
+      return updatedSkill;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  deleteSkill: async (id) => {
+    try {
+      const deletedSkill = await Skills.findByIdAndDelete(id);
+      return deletedSkill;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default exposeServices;
