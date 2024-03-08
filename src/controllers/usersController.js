@@ -15,7 +15,27 @@ const exposeController = {
     } catch (error) {
       return res.sendStatus(400)
     }
-  }
+  },
+
+  updateUser: async (req, res) => {
+    const { body } = req
+    try {
+      const updatedUser = await usersService.updateUser(body)
+      return res.json(updatedUser)
+    } catch (error) {
+      return res.sendStatus(400)
+    }
+  },
+
+  patchUser: async (req, res) => {
+    const { body } = req
+    try {
+      const updatedUser = await usersService.patchUser(body)
+      return res.json(updatedUser)
+    } catch (error) {
+      return res.sendStatus(400)
+    }
+  },
 }
 
 export default exposeController

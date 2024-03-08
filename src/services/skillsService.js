@@ -21,6 +21,18 @@ const exposeServices = {
 
   createSkill: async (rawData) => {
     try {
+      // Normalize the skill name by removing spaces and converting to lower case
+      const normalizedSkillName = rawData.name.replace(/\s/g, '').toLowerCase();
+
+      // Find if a skill with the same name already exists
+      const existingSkill = await Skills.findOne({
+        name: new RegExp('^' + normalizedSkillName + '$', 'i')
+      });
+
+      if (existingSkill) {
+        throw new Error('A skill with this name already exists');
+      }
+
       const toSave = new Skills(rawData);
       const newSkill = toSave.save();
       return newSkill;

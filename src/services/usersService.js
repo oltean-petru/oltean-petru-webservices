@@ -58,6 +58,37 @@ const exposeServices = {
     }
   },
 
+  updateUser: async ({ id, body }) => {
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        body,
+        { new: true }
+      )
+      return updatedUser
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+
+  patchUser: async ({ id, body }) => {
+    try {
+      const { skills, roles, ...restOfBody } = body;
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: restOfBody,
+          ...(skills && { $addToSet: { skills: { $each: skills } } }),
+          ...(roles && { $addToSet: { roles: { $each: roles } } }),
+        },
+        { new: true }
+      )
+      return updatedUser
+    } catch (error) {
+      throw error
+    }
+  },
+
   updateUserToken: async ({ userId, refreshToken }) => {
     const query = {
       _id: userId
