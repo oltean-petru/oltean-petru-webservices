@@ -1,10 +1,22 @@
 import usersService from '../services/usersService.js'
+import QueryBuilder from "../utils/querryBuilder.js";
+import User from "../models/User.js";
 
 const exposeController = {
 
   allUsers: async (req, res) => {
-    const allUsers = await usersService.findAllUsers()
-    return res.json(allUsers)
+    const builder = new QueryBuilder(User);
+    if (req.query.sortBy) {
+      builder.sortByField(req.query.sortBy);
+    }
+    if (req.query.fields) {
+      builder.limitFields(req.query.fields);
+    }
+    if (req.query.page && req.query.limit) {
+      builder.paginate(req.query.page, req.query.limit);
+    }
+    const allUsers = await builder.execute();
+    return res.json(allUsers);
   },
 
   createUser: async (req, res) => {
@@ -21,7 +33,7 @@ const exposeController = {
     const { body } = req
     const { id } = req.params
     try {
-      const updatedUser = await usersService.updateUser({id,body})
+      const updatedUser = await usersService.updateUser({ id, body })
       return res.json(updatedUser)
     } catch (error) {
       return res.sendStatus(400)
@@ -32,7 +44,7 @@ const exposeController = {
     const { body } = req
     const { id } = req.params
     try {
-      const updatedUser = await usersService.patchUser({id,body})
+      const updatedUser = await usersService.patchUser({ id, body })
       return res.json(updatedUser)
     } catch (error) {
       return res.sendStatus(400)
