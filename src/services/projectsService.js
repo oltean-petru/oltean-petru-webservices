@@ -20,9 +20,9 @@ const exposeServices = {
     }
   },
 
-  fintAllProjectsByUserId: async (userId) => {
+  findAllProjectsByUser: async (userId) => {
     try {
-      const allProjects = await Projects.find({ userId });
+      const allProjects = await Projects.find({ users: { $in: userId } });
       return allProjects;
     } catch (error) {
       throw error;
